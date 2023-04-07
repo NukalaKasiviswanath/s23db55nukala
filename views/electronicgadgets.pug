@@ -1,0 +1,16 @@
+extends layout
+block content
+  div(class="container-fluid")
+    h1= title
+  - let results=[{phone:"Iphone 13",model:"A2579",price:999},{phone:"Galaxy SM",model:"SM-R880NZKEVZW",price:800},{phone:"Real me",model:"gt neo-2",price:390}] 
+    div(class="row")
+      each form,index in results
+        div(class = "col-sm-2 bg-success" onclick=`buy(${index})`) #{form.phone}
+        div(class = "col-sm-2 bg-success" onclick=`buy(${index})`) #{form.model}
+        div(class = "col-sm-2 bg-success" onclick=`buy(${index})`) #{form.price}
+        hr
+    script.     
+      function buy(itemNo)
+      {
+        alert(`You purchased Item ${itemNo+1}`)
+      }
