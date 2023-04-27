@@ -1,16 +1,31 @@
 extends layout
 block content
-  div(class="container-fluid")
-    h1= title
-  - let results=[{phone:"Iphone 13",model:"A2579",price:999},{phone:"Galaxy SM",model:"SM-R880NZKEVZW",price:800},{phone:"Real me",model:"gt neo-2",price:390}] 
-    div(class="row")
-      each form,index in results
-        div(class = "col-sm-2 bg-success" onclick=`buy(${index})`) #{form.phone}
-        div(class = "col-sm-2 bg-success" onclick=`buy(${index})`) #{form.model}
-        div(class = "col-sm-2 bg-success" onclick=`buy(${index})`) #{form.price}
-        hr
-    script.     
-      function buy(itemNo)
-      {
-        alert(`You purchased Item ${itemNo+1}`)
-      }
+
+  h1= title
+  //- - let items = ['electronicgadgets_type','quantity','cost']
+  - let items = results;
+  - let o;  
+  script.
+    function buy(x){
+      alert('purchased item ' + x)
+   } 
+  div(class='container-fluid')
+    a(class="btn btn-sucess" href="/electronicgadgets/create") Create
+    div(class='row m-1')
+    div(class="row row-cols-1 row-cols-sm-4 g-6")
+      each item,index in items
+        - let destination = `dispatch(\"/electronicgadgets/update?id=${item._id}\")`
+        - let details = `dispatch(\"/electronicgadgets/detail?id=${item._id}\")` 
+      
+        div(class="electronicgadgetsd text-white bg-dark mb-3" class='col' class='electronicgadgetsd' class='electronicgadgetsd-body' class='electronicgadgetsd-text' onclick='buy('+index+')') Item #{item.electronicgadgets_type}(#{item.size})is #{item.cost} 
+          <br><br>
+          span(class="btn btn-primary", onclick= details) Details
+          <br>
+          a(class="btn btn-warning", href="/electronicgadgets/delete/?id="+item._id) Delete
+          <br>
+          button.btn( class="btn-success ml-1", onclick= destination) Update
+
+  script.
+    function dispatch(path){
+      window.location.href=path
+    }
